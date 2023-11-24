@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wonder's Gallery</title>
+    <meta property="og:title" content="Wonder's Gallery" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="The Seven wonders of World" />
+    <meta name="description" content="The Seven wonders of World" />
+    <meta name="keywords" content="Wonder's Gallery, Som Gallery, Hackathon" />
+    <meta property="og:site_name" content="Wonder's Gallery" />
+    <meta
+      property="og:image"
+      content="https://www.oppaca.com/hubfs/Imported_Blog_Media/copertina-May-19-2022-12-37-29-33-PM.jpg"
+    />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @keyframes colorchange {
+        0% {
+          color: white;
+        }
+        25% {
+          color: green;
+        }
+        50% {
+          color: red;
+        }
+        75% {
+          color: blue;
+        }
+        100% {
+          color: white;
+        }
+      }
+      @keyframes bgchange {
+        0% {
+          background: white;
+        }
+        25% {
+          background: yellow;
+        }
+        50% {
+          background: red;
+        }
+        100% {
+          background: blue;
+        }
+      }
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes zoom {
+        0% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        90% {
+          opacity: 1;
+          transform: scale(10);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(15);
+        }
+      }
+      @keyframes bgcolorchange {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      
+      body {
+        height: 100vh;
+        margin: 0px;
+        cursor: none;
+        overflow: hidden;
+        background: linear-gradient(
+          -45deg, black
+          ,rgb(48, 48, 48),rgb(104, 104, 105),rgb(97, 97, 97)
+          );
+        
+      }
+      .start-body{
+          background-size: 400% 400%;
+        animation: bgcolorchange 20s ease infinite;
+      }
+      .image {
+        border-radius: 40px;
+        width: 35vmin;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        animation: fadein 0.7s ease-in-out;
+      }
+      .image[data-status="inactive"] {
+        display: none;
+      }
+      .image [data-status="active"] {
+        display: block;
+      }
+      .entry {
+        position: fixed;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
+      #head {
+        position: fixed;
+        font-family: monospace;
+        font-size: 30px;
+        color: white;
+        opacity: 0;
+        
+      }
+      .start-h1{
+        top: calc(50vh - 75px);
+        left: calc(50vw - 75px);
+        animation: zoom 2s ease-in-out;
+      }
+      
+      #icons {
+        color: transparent;
+        z-index: 1;
+        font-size: 20px;
+        padding-left: 5px;
+        padding-top: 20px;
+        transition: 0.5s ease-in-out;
+        color: darkgray;
+      }
+      i:hover {
+        z-index: 1;
+      
+        animation: colorchange 5s ease-in-out infinite;
+      }
+      .center {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        display: flex;
+          color: white;
+          z-index: -1;
+        flex-direction: column;
+        position: fixed;
+        top: calc(50vh - 75px);
+        left: calc(50vw - 75px);
+        animation: colorchange 20s ease-in-out infinite;
+      }
+      #hover {
+        font-family: monospace;
+        font-size: 20px;
+      
+      }
+      .fadein{
+        
+        animation: fadein 5s ease-in-out;
+      }
+      .gallery {
+        bottom: 0;
+        display: flex;
+      
+        justify-content: center;
+        text-align: center;
+        left: calc(45vw - 75px);
+        position: fixed;
+      }
+      
+      .cursor {
+        z-index: 999999;
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        border: 1px solid #fff;
+        transition: all 200ms ease-out;
+        position: fixed;
+        pointer-events: none;
+        left: 0;
+        top: 0;
+        mix-blend-mode: difference;
+        transform: translate(calc(-50% + 15px), -50%);
+      }
+      
+      .cursor2 {
+        z-index: 999999;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        animation: bgchange 5s ease-in-out infinite;
+        mix-blend-mode: difference;
+        opacity: 0.3;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        transition: width 0.3s, height 0.3s, opacity 0.3s;
+      }
+      
+      .cursorinnerhover {
+        width: 50px;
+        height: 50px;
+        z-index: 999999;
+        opacity: 0.5;
+      }
+      
+      ul {
+      
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+      }
+      ul li {
+        list-style: none;
+      }
+      ul li:before {
+        content: attr(data-text);
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 6em;
+        color: white;
+        font-weight: 700;
+        pointer-events: none;
+        opacity: 0;
+        letter-spacing: 20px;
+        transition: 0.5s;
+        animation: colorchange 20s ease-in-out infinite;
+        white-space: nowrap;
+      }
+      ul li:hover:before {
+        opacity: 1;
+        letter-spacing: 0px;
+      }
+      ul li a {
+        cursor: none;
+        position: relative;
+        display: inline-block;
+        padding: 6px 15px;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: 0.5s;
+        overflow: hidden;
+        z-index: 1;
+      }
+      
+      ul:hover li a {
+        opacity: 0;
+      }
+      ul li a:hover {
+        transform: scale(1.4);
+        z-index: 10000;
+      
+        opacity: 1;
+      }
+      ul li a:hover:before {
+        left: calc(100% + 100px);
+        transition: 0.5s;
+        transition-delay: 0.2s;
+      }
+      #image-text {
+        font-family: monospace;
+        font-size: 30px;
+        color: white;
+        z-index: 9999999;
+        padding: 50px;
+        text-align: center;
+        animation: colorchange 20s ease-in-out infinite;
+      }
+      a{
+        cursor: none;
+        text-decoration: none;
+      }
+      #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+        height: 100%;
+        animation: fadein 10s ease-in-out;
+      }
+      #start{
+        width: 100%;
+        height: 100vh;
+        cursor:default;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+      }
+      #play-button
+      {
+        padding:20px;
+        border: 2px solid white;
+        border-radius: 30px;
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <audio loop autoplay="true" id="audio1">
+      <source src="comebackdown.mp3" type="audio/mp3" />
+    </audio>
+<div id="start">
+  <button id="play-button" >Queres recordar Nuestro viaje?</button>
+</div>
+    <div class="cursor"></div>
+    <div class="cursor2"></div>
+
+    <canvas id="canvas"></canvas>
+    <div class="entry">
+      <h1 id="head">Un viaje por nuestra galeria</h1>
+      <ul>
+        <li data-text="instagram">
+          <a href="">
+            <i id="icons" class="fa-brands fa-instagram"> </i
+          ></a>
+        </li>
+
+        <li data-text="github">
+          <a href="">
+            <i id="icons" class="fa-brands fa-github"> </i
+          ></a>
+        </li>
+        <li data-text="linkedIn">
+          <a href="">
+            <i id="icons" class="fa-brands fa-linkedin"> </i
+          ></a>
+        </li>
+        <li data-text="website">
+          <a href=""
+            ><i id="icons" class="fa-solid fa-link"></i
+          ></a>
+        </li>
+      </ul>
+    </div>
+    <div class="center">
+      <h2 id="hover">Te Amo</h2>
+    </div>
+
+    <div>
+      <img
+        src="https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaDd9_qdIbvHMjTOgnBTX1obBPizMMgEYS5HpmIWbe2TQYt8hk5LvQrUPucJGC8sxj0DDUqacdO-93JKV5t3n6h6Mzvn=w1920-h963"
+        alt="SANTA CALMA"
+        data-index="0"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHfBqlxpvKZW9ADlFN3ta7XNDoD_tlpYCGnN7mL800640oe1A7TKsz-3_gThU4fGeLC93kxmLgGM3bcYZmuUSNLuPPPdPeH3acljQn7aF6rSBmMK7ejkFMf-Z-CVxU_II6RpRQIXwYMgIyFk6UGbfKj-I96IMSiuRBrScdmmQPmJ2zBf9v2dcFxekrZh_YdSMiHs6ITgfS68j0x5aJ_IdoSqafTgG4KzijMu3zWXw9o_wUeP7WGqOpYNWRcyEVFOgiaca0m6u5rAIA_TmeXd5i8B7RFUru0T5qpGeUQlm8ES3z29rTTyaK7JeUaxHwx27xzJHIWutLpj_iZNDuAB0N6AW3n9vVEeQApnRQdIPEwBTaAhRl130KTkiFu7SAgL49UVrWoTecxCio7-TJOg5wqoApI7q022iXlTOQX6SuSAz81PBYD_FvkNvpG5jKTBkPDRRn8fqb7aSS4xnUf0mwsc_E4u7iVwtarzbwcTckHgGlej7P1hKvb5R4shkxH7WGllHO7JZVfP5NMglB5J4HFkgdsyY-0EqmX_8FTSPXvJUsiAO4IQikKPnni7Qbe3ieDDp6u4MyLfN7FanKiFskCVKyXJa5PMO_I8s99CgsnEfKhNVj_cQuS9juSS8szoL3dnRJkM3Mts_RrWzlqJrfedJW_cq9TfoWctIrgxk8kE_y98bwUG-skMznnVuKPwuJKA1pvMEPEV1pc1zQEJApUKJRGQZ0tF9aq7LFHhVUGWEERi2XLymog2qzuPV5suTG7-CywX9thOUrVa8ei49Hs6uF-yan50A_BdMfhdTRctatzzOysCjuOyQS2CI9ZNVDZzjQa797jODrfcBf3cEDLk5K1iBtHjIhdS5YDedlnKzKYjqMVwXRQqceTLPmHgrV8kSLjL3T6XthwHY7_Ufh4=w722-h963-s-no-gm?authuser=0"
+        alt="Villa Allende"
+        data-index="1"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHea6MBsXhAMnZvA-1uRv9vFaXtDE0rbjdPqW9-QiLrwwOiwJ_RBhyB60gcnrM-A1Qxj8AfmW5oDWiQxNcnMLUVpYoRTisj4LgQULUuxVEX9fYi50Dgh9OKMpnxSkpHZilyf6P7AVwHkbx77STqqBka5xHAF2RapXbiUbdvVzMp_HImWLSIYTK_1-b36fDzSP0HOnNKoTJSYCtz3PPoyweI-GFOLP9ctEkXE8aRwv9AFq6wGhCKSIYrg2IHoNDThS0H4HNQmT07s_2Jdo9UZhrI54i0tYW9NMdYEe9saJH8XohvZ_uwszKxKqlkEc2CjNisy8XjhrLgChQssgD7WazVNQ6SyZ8LTPXDP4hk05C5hZxzegC33vz2dpeIaIQRr2h5xGNv5-sF0ch_pcPj7OG_ZyptC5OecuVrHKr-qwHtQ81e-X1GvCRFwY1aksWFtckuts5nBCHnbRsecLsPM6zJ8ke9eL7YsvUpc6nEXvMPCQOC3DkOGhuPWGtsEDIwjn_WESLz5hxZrAemd__4whnHAyNuD1OtcQR1LxlOAMU81pcA9B8ZBoKrLAIIv9rVWRNqG7Eb0Vkt4hVNiymZBUe9L8kj3luU8Nj0XvCQljxnfv4DE41gNkO4Co3KRl3JTUg2fQmgKjJRTPvGqmiBhn-YxQeSt3KlH_kuPiUIaNLPTt-pzgtV_SzrJbaIozQ_LltS7wBqPmzkILABzsb4Z2HXfZcua18bnl_bawaOW147QnUL2I80kEZNnIA73vU-ch2JumhKK_55rxK4SM-QyLX_lekdWtKzVUp5pMVA7_27E0oBwW-_AQxX4hVaXOqWYGXV6AIlN0kYEtCKzBAkxbh4s-TjEXhOWmM48zN8aq7YwJKY-KArBfH3MLYnBp6cEeBAM-zQsKHDys_QsATi9OQ=w722-h963-s-no-gm?authuser=0"
+        alt="Mario Alverto Kempes"
+        data-index="2"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHdL8R7vl4WRheCVISS0VXiUeHoxSBepBoq4sHwLDIF8zZ_l49bvaGKa6DHyzyRyBTBDk67pVc3r_FvfmycHfdhmUUV1_goQdB2dL0trg_HFITJsGk5Y9QfUKS4rIa7bL8MUi2wzrOsk7VGIy5TI8MYkvfemzyXsQ4YG9cu_ttT6nN9Kxj5wD5R6aU7i9m_9VeGfi-KGy_5gk0KaF9FSJ38MrVh0hdWBvj55WH0A_Z4QzAOlxEh2Ifq7qKKV7OybSxiZJXdsIdWImF5tGnnRtErXTNaKNnNL_kex2-m5dKe05MPR0C7E3Ezn8MTVitXwCvooNwbb7bcvNpCZVfSyvZ-9nXgl9BwGixODN0zTqloKXIOMO3FlYZVN_B4KfbYnJBSjbnf9RoB3bdFfWg-nYYKQCouKxDttx4oXM2xMoWPVxMKT-bH_3pmXE5y1V5VtKwsCYI8jBNNBRWQD80PxCcBgg04SFtAWeKwil5jFG7eaBeiPHxhHqHC3PXIkyZh2rDgWbWZtxNtPH9MvRlL2NhGydxOKwxA2hxMpJAuwNxM_TunrNX7hXhT3H89raaKn3gIl-IrEKwggKTiQn9psg1nTq1HHUtFXW1YcKu4c2mKeuchS99zWjj6yIhx6GwIR82te-vR9WhTH7640pRxuK7A7J3emk49FLWJnubIARlH2dbTqYKPPKnOmTjk9j79lx56NS7IKIhBXT94356bLZ-wKoEUdXPpNoI3XXszjs8Ddb1-kDbo8w8qIgclArLpmZ2m63-1HFHpZHYJiECeG1m5VGYBh4NbRszuwglwnexlXAhrL-VfHP4TL0a42nNrZ_Ir3WrQklg3rBHaQU8d2NHmGOpsPfy_EsylBEzoVo3itdB9ONEgA8ySMQFRC8OqiYrB3wZ37RJXfrHLdrCPwoI4=w165-h220-no?authuser=0"
+        alt="Compe Briskbox"
+        data-index="3"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHfoTD01xZ2WLjMOYG6_bmoJZTXnF1qCUS7B7X68G_IMWP6UzoWxh2f10H5q2qa_RvooHrOmbLEtLeMXC5Nb5RJXpINSRDI2sLCCuwhr__nAG9L9KMYVobMQL_VDj12UMWOAoAj3Hc6-HNWTKaOTfb1f2XT-0CmcqkBZcZKC2iJJFBw56rRm1Vq9n7jT2fN-o9S651vhu_LMuOvwbuXDHQp2PHS2ifSs3O2prsoQ1sjOQU8Mre6nG6T7T553RVR6wuUAqzpl4yYWydLlLdBrTsRV0U9zgCuYW3_ZbCrFZRNCSV9nLpGIZ2swoxHZiN3lB9zH-QIVlJBb_zZFOqSmEt-SBQGjCbNhGcLz008JY638qhjhBsnyrD7lsdlTYfPo9oqwTXzvHDP4PaIBrXn_ZUbbFdP0VlCC62_1FFF1QNoWhrs1ACDKJdjdrZwRC1ioGEKK-W5rjNyc17FUfR-Q2ss0FhQnXaXArz-66a8Tolt31XkN5p89C4ViZT1XYfbe1Y2mQlPrQHMW_js3LD_QDvQ1XtRqGOsMfQzl-aB4k4puWFGwh5XyZf9Eu7UJpxl3mDAnrrpTXbayPPVbXpbra_wCPP1e-PXCoIMFxmPPgIQGsRxcMRgMcgQkXTjkcd1edifwLR64J0qkeNvXPDpDD56eKyfHk74878U56_AvQdqMdLHGZiBmDXrQVk8Z61mHHbWjuMEuH9BiS1Bvh398QxdJ9PBCtXbE71mCbpe43cF0CtKxbEv7g9IUQcn1RaQ4harrQztz6rMWpscJ1Tt_U8eIvmVX_whBDLBY_kDr4ObUYSteCKfEdRwIylxexYo5OpnJkXrYT2JLNnnsW5mTELdGJqZDN17ZlVZoKEjTb0t5itq5KFrYxsSDKTtUbfEHx6J-Y_em1-WQh0K1gSydnRU=w1284-h963-s-no-gm?authuser=0"
+        alt="Villa General belgrano"
+        data-index="4"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHfQypY3uCPLMWoENS-wB1VYsS5PsLqOXmcNCDWWi_joaGbehoFsVoUAmjUdzP_tyg1LfTTpwTpI5vlp2T22LjvYMEybZPZHP0Xa_cgxQYzcFzztGP2sz7uHidgaTAnA-raU3_3AlWuc7afKebUjHCHWLpllUtpFg05GaGAmzzIjyj7wnra2K7kgFUHaUGQO0WDNCHr1ebwpEb6tKVbxQxAIZIbOYG31R9jb-T7AZTJ7xBryVOzXN7h2nLhPgSI0kP-pA9DC2Ci7RJ0bNeodKUa7Wxa0cTBvopgp033VZPEVT5iYAzMzgI6yCm-pZgp9w3xGL0XAILs1yEvaoG1vZ4dYoQW_72UHvYGCMfR0F-MaAXWURGoxabsVyhWpWyErc4ZgETNEp1j3UApiPCuk9hK-qQEDMILw6GbazqiefcvV9hm-glh_J3toAZfVCnL_s6Dm5XpG5hQbNUoSnsOCV2TmoMuvnSb6I7iCD6frcL1MErtmfiHQI9FO78i8KkfobOxB9vRFW-KGxKfNzrpouBhw9LpJgv4pt4pDs0NhKNoryi_uYu5-ZNbHskamX7D2yHWv1uKmM6eNkMQebI8t4B6_s_yuHZzE3jZteyZcmnZbFbYbzypM_onpC7xpbKQ3Bra8I-od6YZu5IVI3rO2Sy_3IHEbbp_-Vo131phb9rQ-i5QwxrMnRzNSGpFdAQa3reaSw3X7gNa93ZIzqv5mSs8CwNXk-4xJ-3f6ednOMotgpX75ZHzocf0yvdipxtAr-0s4n9-WbQpzk2oAKumGc2dFQb032EsBbK41-T_uFvdZzwQnxK5VDg32qtynlEtr3nNW3McbX6fohFgnls3Fbpuk-3AVJC5vXOOMQP-m-285PcKWvlCPNo-3C1dFj3scWqCCBaHio4xUzw5zpWnEzw8=w169-h225-no?authuser=0"
+        alt="Cumple manu"
+        data-index="5"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHfQXeIHDJSS_Ry5j1ey-aEdYxVQqhDiqQdA2ILUnCXKmbf1QiotJZy76RgIe0nm_xbJMBplQux1sPGCmaZR7R72n6BW3NjLmRXnPdkzKPnYCM1qq4ozj0LuY74QeUybG981yKSEQOfha0111N1WeoE3e1QQwG-z0MgeWga4oH-HfKb_RFsx6IBcwULZVZMk7ONpdApbXSIguL7f_iKh6i9sfipaJCKjVuLHfS4OMtEwsVR2H6VP4A_pfkz5a_jG-8YuM_9maDEdMKHR7Jbr0qEhRBHq_00RqV2_3neK9oMCAnSwT7qiPjh9Zft0rydIgNDuGnFPRxAsRaZQ-DShUePvuFKa4RdmY7K3IqIvx-oKhG5BphxTXgCOcb6BBziQLMZ-cgd9xJvdun5kFT0fr7PJyQeeYas-YqCQMhh6n9UPzZ86jftY7S-PRup63smU1XQT8uB6cW7RTw_gMfZy-XkfbE1UF2oMRWUhGgCLRVhLDjgl4C1pOx1o4Et5qyK5IhWO-fYa76r4YxpsbiHm_NwhZbnrOkS49jVUDidiCH0-8i1_fDSIsZBo9TwcJTnyr7XGT62AL1raVmZWFm7DnJqsjD9y_vq4eOMyRnA42kPJGYBjJP8G-cJNp5LEwERpD8Zx-3cdS9LuxCJXeUJ8eCrJenhEcIEFovxsyLK0cqfsBRRLlX0cpUS3vAugus0EM3bpRjFteZCbSL2NMefMWn9iEPp01ph-GZL9lXD167ave_lQqMMLB-Xl7owt7VolLdoaJLe9ROCmaew47s1IPv1eFJuReP3Oi3Xf2AQH9CMO7mPSElic-KT3mwEZc9xXUl5b_Geq679v9fMpAOiAjdhaVxRrj6qQzfVu-QwartQaLSX3EGV4XdNCobH5tg-EnhfVQIBkGsqzYNLJLiNjjA=w722-h963-s-no-gm?authuser=0"
+        alt="Villa Carloz Paz"
+        data-index="6"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHfrBK-z-5wefuHvlwN3oIfrEJtNe2BXDqAomQnym7rsJJXMI4SLnySu5daeuPT3J4hWIUwEnKtaDzmrqGlT6npE1qJJtl7GetOJVr3nI0vanF-Dpp4t2X6hKLjfMNzQZxINsrJsmRnwe-mB4RSi2QrWn6slpPBQCAWNMaQpiqm4j_8sdxyek1IqAkxN_UgNq-JXWQyZfr_hE6DY0-YgrhsBSG8UPvs60XyWEbDZJnoO9hVZW1yg_TkmkPGPjd6YhTWIboqTBKrklegW4Df7Ahg_XZ9_5IFPB8DZ-Z1A9gZaB7y3_KeWs8pQ0bQVScsBI9mEKcdyrAqOpne1RNfP824GsE9qnMBafuFwOArjPHef9LbXj7fJU3v6lhMr_F4Tlw48sob2LEbdMKYkwrl6eGYQKBAbLQ7iovz65h8MhyRsHMK2n5L0Ykv5kq87--On1VGvhRILi-6X15W72QRRsHhn040fYixztKahkf9zjybzaoF7aiuP7FanynF00ffnB6H612PxcUigwxzcPP8Q0EZic3dnLOofS6VO-pYtS6UqOZ_XFgGgNpREJpzu8Gvj4hxJ2W-6GxF4PoladtXWcFRu2puQrosZ-EaOBWGDs7sQkyg9wxfDskqaYv8ivIF2r1mYbgk5waPgPa8ykYjhT-ofx1yiwuWLPfCkWMIq-rDtUxRtJVcAjkoUYF5_Xw9rKyFSXry-tZDNX_9B1HyXu3_r56RucVso1WDFz_wodwaDfmfcIMYGKfW-JgZWaZFDOPao31pHpzXCg_hrEKqCi96t7gRy9GOdVU1FbPolgp43eKR8K8uCjJmRNQ2WLb72TQ3BrJGUQqB2kpagj1XB2u_69HXtTkIm2k62bMUgh5A_cQo8qKkBMdcm0V-ezuGxGurrDzVfQyxqZvwLefxzUw=w721-h963-s-no-gm?authuser=0"
+        alt="Pan de azucar"
+        data-index="7"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHdg7n2jdHjqWztqAwNd0pJDd-kqYOxdo416TjluJCpHVd7pKaXmyDt_Ua9e_zywlHhA2tVfFiHEuTWlaB_dpNFmz_t2u2wDMICbQvyYuBw5RG059Ft2rUjIZIjpo0ha2Qknu7D83Msgr_6b8tM0PrYvJM_wofziG12E-kjoi10ndSJT8QEInqLtltVz5QVbKyZNn1iJbwHlWnipYRyMNBw0jx0Pe7Abq6YRlXC5NhsRQ23QmGpD4yFd-fdWqsuRNwO_iVxnMvsxcZ5ltY1NYTg6wCb4lzGqlxke5BqawZpMDEkAfyX-Uw1yquqtNa7RYj5a7T_9ZTPramy88OTpvFo4ZYjdb6aVcmEbrFuVLS3FnGV7z4CYemasK-PK6MvatpKFEFbrWwXs-8fMLdUNuCQBN4XC9i30aD9XqIF1d2Hw02jKwZTtXqFS-W8vBIWWBl-02HO4gyctzZ2V3_7Ha08_shMDtCMIrTthU61U07PB3f5tnqeV9f0O8JUchve7KkS1fEBLRJsVv0bPKv_QJL2GR0CGDogmq2-6j7zzSCerbw4i8kmS7uZAabTw194zYoxWLPs3162AjARXMQvkQTH2MnRuYZxJZoZVoWKOmEBQs5BFYkAPgZmrkCFK514A7oSzoC1XQdrcHE5KXSzmvJ0fT1Vge4MlrfpOUx7jCoqNJZCo0Kpt53X-QQ1sbJUTbWytBOX1d4hA1pBZyJsZRujz7ZKzkY9paQp7fTrSYIJBLkutgyLHPoBi2Kp8qaKlJqyAX9G7N1bF6VOb9mafo2GpWEUx7QJkHdXWa1lOKHid0Em6n9TjyKuQl8lkNddnz3PynMyxaTa2S8CVW1LrO0bpUfOLah2RF7BmpVieQseXNO-Qzhqkpx42z_BicIdBnOapjjqeC-Cy7a7B2MOJpA=w165-h220-no?authuser=0"
+        alt="Villa Allende"
+        data-index="8"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://lh3.googleusercontent.com/pw/ADCreHe3ZCnJXBpMHIdbL30H29bd-w74kz0YAye-TvrByXUdig2oaZRU5BKY-0h5876C6pSEXuOaYYWG6J4WV3VnAnfhyWZBEMeEMUuQRqG8aOanlKBIMnzEzoTHQ6udltwpmXOJm6vCLLac-T5FDfN5pp463JEKSPPw95zozn0E8Xq-OkpBynop_q2mSctj5IzwP64-rQ_rIpFpXgmucEevfyMGFVagi5VVmF3UUqCQqqy9nV-ZluBGtXjp-xq7EZ02_NEqmGie76Ni0uKepoWZoDs4Zc9Wy3WT1JvMMpzqcY_BnrOQgkhZMvO7rinV54XKPMLgkfohogsDdnzh0moFTtFQCVF-6NuzIAejnwug2RubN93Ov74u3bYtej0kvFNSBdPYxKPl9fUbtCGTHRK5Q5Aw1iEg3ML0TqfOxxY1_m3g1uDfMOgqjf5p_1j7KKDQ8nq5EIJ3tttnwK2aHeH4N6mVNipDEdy6BVWPeHBUSwLdgxGFHrYfmo0a04THrUobGWx1AX-mzHcAYQRIJ-KK_LyJKXnzOVlt6wMeEBYtr2rjycWMwJ1UwaZpjoJusfNZm2v-CZTqLK0s1QFsZmnKU94ItsiQKoB4WcON10dupuj3cTweriYlSS5IoEL6aT5PV3TJNW4UrOX0VwLYHz6N42s45cK18FuE5iK4TCDH3jt8IaIh_tpXu60wUfEOue0lUKpvsXelkwIpRPmcmHCY2kBtuVbM2LuoC-tfHCQr2ZvQJ3Dq1cEgrg2zrpmUqp7RjKaFAOX-XCpHr9l9nADWdmQZK-wJNBK2b5yRyiZYdUjfR5hW21PIsHNerb43OZYIYVMiwB9OUabg8bI4i4U8TqYnc4CZPdtkV0jghOEKrpADy_W38hsyQGDETkFI5BM2KxZtJRrJbEQwHMnxADR8Lw=w722-h963-s-no-gm?authuser=0"
+        alt="Milenica Tower"
+        data-index="9"
+        data-status="inactive"
+        class="image"
+      />
+      <script
+        src="https://kit.fontawesome.com/8da2eb643d.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+    <div class="gallery">
+      <a id="image-text"></a>
+    </div>
+
+   <script>
+    var playButton = document.getElementById("play-button");
+playButton.addEventListener("click", function () {
+  document.getElementById("start").style.height = "0";
+  document.getElementById("start").style.width = "0";
+  playButton.style.display = "none";
+  setTimeout(() => {
+    window.onmousemove = (e) => handleOnMove(e);
+
+    window.ontouchmove = (e) => handleOnMove(e.touches[0]);
+  }, 3500);
+  document.body.classList.add("start-body");
+  document.getElementById("head").classList.add("start-h1");
+  document.getElementById("hover").classList.add("fadein");
+  document.getElementById("icons").classList.add("fadein");
+  var context = null;
+  var buffer = null;
+  var source = null;
+  context = new (window.AudioContext || window.webkitAudioContext)();
+  source = context.createBufferSource();
+  source.buffer = buffer;
+  source.connect(context.destination);
+  source.start();
+  var audio1 = document.getElementById("audio1");
+  audio1.autoplay;
+  audio1.loop = "infinite";
+  audio1.volume = 0.05;
+
+  const images = document.getElementsByClassName("image");
+
+  let Index = 0;
+
+  last = { x: 0, y: 0 };
+  const activate = (img, x, y) => {
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
+    img.style.zIndex = Index;
+
+    img.dataset.status = "active";
+
+    last = { x, y };
+  };
+
+  const lengthfromend = (x, y) => {
+    return Math.hypot(x - last.x, y - last.y);
+  };
+
+  window.handleOnMove = (e) => {
+    var cursor = document.querySelector(".cursor");
+    var cursorinner = document.querySelector(".cursor2");
+    var a = document.querySelectorAll("a");
+    document.addEventListener("mousemove", function (e) {
+      var x = e.clientX;
+      var y = e.clientY;
+      cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
+      cursorinner.style.left = x + "px";
+      cursorinner.style.top = y + "px";
+      if (lengthfromend(x, y) > window.innerWidth / 20 && y < 600 && y > 300) {
+        const first = images[Index % 10],
+          tail = images[(Index - 5) % 10];
+        const name = document.getElementById("image-text");
+        const text = first.getAttribute("alt");
+        name.innerText = text;
+        name.href = `https://www.google.com/search?q=${text}&sxsrf=AJOqlzV2CB2DCY6LltgVx2-MDXkM3utu5Q%3A1676118424793&ei=mInnY-TsL8ScseMPp_2H0AI&ved=0ahUKEwjkmL7au439AhVETmwGHaf-ASoQ4dUDCA8&uact=5&oq=The+Taj+Mahal+of+India&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzILCC4QgAQQxwEQrwEyCQgAEBYQHhDxBDIJCAAQFhAeEPEEMgkIABAWEB4Q8QQyCQgAEBYQHhDxBDIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIJCAAQFhAeEPEEMgkIABAWEB4Q8QQ6CggAEEcQ1gQQsAM6BwgAELADEEM6BwgjEOoCECc6DAgAEOoCELQCEEMYAToNCAAQjwEQ6gIQtAIYAjoNCC4QjwEQ6gIQtAIYAjoECCMQJzoFCAAQkQI6EAguELEDEIMBEMcBENEDEEM6CggAELEDEIMBEEM6BQguEIAEOgQIABBDOgUIABCABDoICAAQgAQQsQM6CwguEIAEELEDEIMBOgoILhCxAxCDARBDOgcIABCxAxBDOgsIABCABBCxAxCDAToECC4QJzoICC4QsQMQgwE6CAguEIAEELEDOggIABCxAxCDAToLCC4QgAQQxwEQ0QM6CwguEK8BEMcBEIAEOggIABAWEB4QCjoFCCEQoAE6BQgAEIYDOggIABAWEB4QD0oECEEYAEoECEYYAVDFHFiDV2DOWGgFcAF4AIABjQKIAZokkgEGMC4xOS42mAEAoAEBsAEUyAEJwAEB2gEGCAEQARgB2gEGCAIQARgK&sclient=gws-wiz-serp`;
+
+        activate(first, e.clientX, e.clientY);
+
+        if (tail) tail.dataset.status = "inactive";
+        Index++;
+      }
+    });
+
+    document.addEventListener("mousedown", function () {
+      cursor.classList.add("click");
+      cursorinner.classList.add("cursorinnerhover");
+    });
+
+    document.addEventListener("mouseup", function () {
+      cursor.classList.remove("click");
+      cursorinner.classList.remove("cursorinnerhover");
+    });
+
+    a.forEach((item) => {
+      item.addEventListener("mouseover", () => {
+        cursor.classList.add("hover");
+      });
+      item.addEventListener("mouseleave", () => {
+        cursor.classList.remove("hover");
+      });
+    });
+  };
+
+  const canvas = document.getElementById("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const ctx = canvas.getContext("2d");
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let audioSource = null;
+  let analyser = null;
+
+  audio1.play();
+  audioSource = audioCtx.createMediaElementSource(audio1);
+  analyser = audioCtx.createAnalyser();
+  audioSource.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  analyser.fftSize = 128;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  const barWidth = canvas.width / bufferLength;
+
+  let x = 0;
+  function animate() {
+    x = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    analyser.getByteFrequencyData(dataArray);
+    for (let i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i];
+      ctx.fillStyle = "rgb(101,105,150)";
+      ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+      x += barWidth;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+});
+
+   </script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>
